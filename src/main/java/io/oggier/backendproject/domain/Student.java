@@ -9,6 +9,13 @@ public class Student {
     @GeneratedValue
     private Long id;
 
+    public Student(){}
+
+    public Student(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
     @Column
     private String firstname;
 

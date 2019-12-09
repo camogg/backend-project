@@ -12,7 +12,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/", "/home", "/students", "/students/*", "/teachers", "/teachers/*", "/courses", "/courses/*", "/enrollments", "/enrollments/**").permitAll()
+            .antMatchers("/", "/home", "/students", "/students/**", "/teachers", "/teachers/*", "/courses", "/courses/**", "/enrollments", "/enrollments/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()

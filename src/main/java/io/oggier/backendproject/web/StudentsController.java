@@ -1,6 +1,9 @@
 package io.oggier.backendproject.web;
 
+import io.oggier.backendproject.domain.Enrollment;
 import io.oggier.backendproject.domain.Student;
+import io.oggier.backendproject.domain.StudentStatistic;
+import io.oggier.backendproject.repository.EnrollmentRepository;
 import io.oggier.backendproject.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ public class StudentsController {
     @Autowired
     private StudentRepository repository;
 
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
+
     // RESTful service to get all students
     @RequestMapping(value="/students", method = RequestMethod.GET)
     public @ResponseBody
@@ -28,6 +34,21 @@ public class StudentsController {
     public @ResponseBody
     Optional<Student> findStudentById(@PathVariable("id") Long studentId) {
         return repository.findById(studentId);
+    }
+
+    // RESTful service to get student's statistics by id
+    @RequestMapping(value = "/students/{id}/stats", method = RequestMethod.GET)
+    public @ResponseBody
+    StudentStatistic getStatistics(@PathVariable("id") Long studentId) {
+        Student student =  repository.findById(studentId).get();
+        List<Enrollment> students = enrollmentRepository.findByStudent(student);
+        long grades = 0;
+        for (Enrollment enrollment: students
+        ) {
+            grades += enrollment.getGrade();
+        }
+        StudentStatistic studentStatistic = new StudentStatistic(student.getFirstname(), student.getLastname(), grades/students.size());
+        return studentStatistic;
     }
 
     // RESTful service to add new student

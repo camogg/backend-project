@@ -1,7 +1,10 @@
 package io.oggier.backendproject.web;
 
 import io.oggier.backendproject.domain.Course;
+import io.oggier.backendproject.domain.CourseStatistic;
+import io.oggier.backendproject.domain.Enrollment;
 import io.oggier.backendproject.repository.CourseRepository;
+import io.oggier.backendproject.repository.EnrollmentRepository;
 import io.oggier.backendproject.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,9 @@ public class CoursesController {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
+
     // RESTful service to get all courses
     @RequestMapping(value="/courses", method = RequestMethod.GET)
     public @ResponseBody
@@ -32,6 +38,21 @@ public class CoursesController {
     public @ResponseBody
     Optional<Course> findCourseById(@PathVariable("id") Long courseId) {
         return repository.findById(courseId);
+    }
+
+    // RESTful service to get course's statistics by id
+    @RequestMapping(value = "/courses/{id}/stats", method = RequestMethod.GET)
+    public @ResponseBody
+    CourseStatistic getStatistics(@PathVariable("id") Long courseId) {
+        Course course =  repository.findById(courseId).get();
+        List<Enrollment> students = enrollmentRepository.findByCourse(course);
+        long grades = 0;
+        for (Enrollment enrollment: students
+             ) {
+            grades += enrollment.getGrade();
+        }
+        CourseStatistic courseStats = new CourseStatistic(course.getName(), course.getStartTime(), course.getEndTime(), course.getTeacher(), grades/students.size());
+        return courseStats;
     }
 
     // RESTful service to add new course

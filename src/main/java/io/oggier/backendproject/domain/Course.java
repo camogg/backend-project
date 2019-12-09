@@ -18,6 +18,15 @@ public class Course {
     @Column(name="end_time")
     private String endTime;
 
+    public Course() {}
+
+    public Course(String name, String startTime, String endTime, Teacher teacher) {
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.teacher = teacher;
+    }
+
     @ManyToOne
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
