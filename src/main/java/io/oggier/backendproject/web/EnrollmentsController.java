@@ -1,6 +1,8 @@
 package io.oggier.backendproject.web;
 
+import io.oggier.backendproject.domain.Course;
 import io.oggier.backendproject.domain.Enrollment;
+import io.oggier.backendproject.domain.Student;
 import io.oggier.backendproject.repository.CourseRepository;
 import io.oggier.backendproject.repository.EnrollmentRepository;
 import io.oggier.backendproject.repository.StudentRepository;
@@ -35,6 +37,22 @@ public class EnrollmentsController {
     public @ResponseBody
     Optional<Enrollment> findEnrollmentById(@PathVariable("id") Long enrollmentId) {
         return repository.findById(enrollmentId);
+    }
+
+    // RESTful service to get enrollment by student
+    @RequestMapping(value = "/enrollments/student/{id}", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Enrollment>findEnrollmentByStudentId(@PathVariable("id") Long studentId) {
+        Optional<Student> student = studentRepository.findById(studentId);
+        return repository.findByStudent(student.get());
+    }
+
+    // RESTful service to get enrollment by course
+    @RequestMapping(value = "/enrollments/course/{id}", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Enrollment>findEnrollmentByCourseId(@PathVariable("id") Long courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        return repository.findByCourse(course.get());
     }
 
     // RESTful service to add new enrollment
