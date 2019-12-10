@@ -7,7 +7,8 @@
 
 ## Installation
 1. Execute /backend-project.sql in your PostgreSQL DB
-2. Start project from your IDE
+2. Edit DB credentials if necessary in /src/main/resources/application.properties
+3. Start project from your IDE
 
 ## Indices
 
