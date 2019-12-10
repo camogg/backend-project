@@ -10,6 +10,10 @@
 2. Edit DB credentials if necessary in /src/main/resources/application.properties
 3. Start project from your IDE
 
+Login with two types of account:
+- User: student Password: student READONLY
+- User: teacher Password: teacher ADMIN
+
 ## Indices
 
 * [Courses](#courses)
