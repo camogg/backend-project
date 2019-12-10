@@ -1,7 +1,13 @@
 
 # Backend-project
 
+## Requirements
+- Java 8
+- PostgreSQL
 
+## Installation
+1. Execute /backend-project.sql in your PostgreSQL DB
+2. Start project from your IDE
 
 ## Indices
 
