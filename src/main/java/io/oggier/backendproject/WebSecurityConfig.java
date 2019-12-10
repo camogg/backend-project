@@ -21,6 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    // Access to specific roles
+    // Students are in read-only mode while teachers can write edit and delete aswell
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
