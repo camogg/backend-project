@@ -9,6 +9,6 @@ public class DocController {
     @RequestMapping("/")
     public @ResponseBody
     String documentation() {
-        return "Documentation";
+        return "Visit <a href='https://github.com/camogg/backend-project'>GitHub</a> for documentation";
     }
 }
